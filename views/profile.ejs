@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/stylesheets/e.css">
+
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* Main Container */
+        .g {
+            width: 100%;
+            max-width: 1100px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        /* Profile Section */
+        .b {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .a {
+            text-align: center;
+        }
+
+        .a img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Logout Button */
+        #f form {
+            margin-left: auto;
+        }
+
+        #e {
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #e:hover {
+            background-color: #c0392b;
+        }
+
+        /* Post Creation Form */
+        #n {
+            background-color: #fff;
+            
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            background-color: rgba(65, 62, 62, 0.481);
+
+            border: 1px solid #ccc;
+            resize: none;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        #i {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        #i:hover {
+            background-color: #2980b9;
+        }
+
+        /* Posts Section */
+        #h {
+            font-size: 30px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Each Post */
+        .post {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-header div {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .post-body {
+            margin: 15px 0;
+            color: #34495e;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-links a {
+            color: #3498db;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .action-links a:hover {
+            color: #2980b9;
+        }
+
+        .like-count {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .g {
+                padding: 20px;
+            }
+
+            .b {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .a img {
+                width: 80px;
+                height: 80px;
+            }
+
+            #n {
+                margin-top: 20px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    
+
+    <div class="g">
+        <!-- Profile Section -->
+        <a href="/profile/upload" id="pichelper" style="background-color: orange; border: solid 2px orange;padding: 2px;text-decoration: none;">Change profile picture</a>
+        <div class="b">
+            <div id="f">
+                <form action="/logout">
+                    <input type="submit" value="Logout" id="e">
+                </form>
+            </div>
+            <div class="a" id="d">
+                <img src="/images/uploads/<%= user.profilepic %>" alt="Profile Picture">
+            </div>
+
+            <div class="a">
+                <h3><%= user.name %></h3>
+
+            </div>
+            
+        </div>
+
+        <!-- Post Creation Form -->
+        <form action="/post" method="post" id="n">
+            <textarea name="content" placeholder="Write a blog..." required></textarea>
+            <input type="submit" value="Create Post" id="i">
+        </form>
+
+        <!-- Posts Section -->
+        <div>
+            <h3 id="h">Posts</h3>
+            <% user.post.reverse().forEach(function(post1){ %>
+                <div class="post">
+                    <div class="post-header">
+                        <div><%= user.name %></div>
+                    </div>
+                    <div class="post-body">
+                        <%= post1.postdata %>
+                    </div>
+                    <div class="post-footer">
+                        <div class="action-links">
+                            <a href="/like/<%= post1._id %>"><%= post1.likes.indexOf(user._id) === -1 ? "Like" : "Unlike" %></a>
+                            <a href="/edit/<%= post1._id %>">Edit</a>
+                        </div>
+                        <div class="like-count">
+                            <%= post1.likes.length %> Likes
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+</body>
+</html>
